@@ -9,12 +9,18 @@ class Item {
 const AGED_BRIE = "Aged Brie";
 const SULFRAS = "Sulfuras, Hand of Ragnaros";
 const BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
+const CONJURED = "Conjured";
 const MAX_QUALITY = 50;
 const SULFRAS_QUALITY = 80;
 
+const sanitizeQuality = (quality) => {
+  return Math.min(MAX_QUALITY, quality);
+};
+
 const handleNormalItem = ({ sellIn, quality, name }) => {
   const newSellIn = sellIn - 1;
-  let newQuality = quality;
+  let newQuality = sanitizeQuality(quality);
+
   if (newSellIn < 0) {
     newQuality -= 2;
   } else {
@@ -30,7 +36,7 @@ const handleNormalItem = ({ sellIn, quality, name }) => {
 
 const handleAgedBrie = ({ sellIn, quality, name }) => {
   const newSellIn = sellIn - 1;
-  const newQuality = Math.min(quality + 1, MAX_QUALITY);
+  const newQuality = Math.min(sanitizeQuality(quality) + 1, MAX_QUALITY);
 
   return {
     name,
@@ -39,7 +45,7 @@ const handleAgedBrie = ({ sellIn, quality, name }) => {
   };
 };
 
-const handleSulfras = ({ sellIn, quality, name }) => {
+const handleSulfras = ({ sellIn, name }) => {
   const newSellIn = sellIn;
   const newQuality = SULFRAS_QUALITY;
 
@@ -53,7 +59,7 @@ const handleSulfras = ({ sellIn, quality, name }) => {
 const handleBackstage = ({ sellIn, quality, name }) => {
   const newSellIn = sellIn - 1;
 
-  let newQuality = quality;
+  let newQuality = sanitizeQuality(quality);
   if (newSellIn > 10) {
     newQuality += 1;
   } else if (newSellIn > 5) {
@@ -74,7 +80,7 @@ const handleBackstage = ({ sellIn, quality, name }) => {
 const handleConjured = ({ sellIn, quality, name }) => {
   const newSellIn = sellIn - 1;
 
-  let newQuality = quality;
+  let newQuality = sanitizeQuality(quality);
   if (newSellIn < 0) {
     newQuality -= 4;
   } else {
@@ -102,11 +108,23 @@ class Shop {
     for (var i = 0; i < this.items.length; i++) {
       const item = this.items[i];
 
-      // updateItem(item, handleNormalItem(item));
-      // updateItem(item, handleAgedBrie(item));
-      // updateItem(item, handleSulfras(item));
-      // updateItem(item, handleBackstage(item));
-      updateItem(item, handleConjured(item));
+      switch (item.name) {
+        case AGED_BRIE:
+          updateItem(item, handleAgedBrie(item));
+          break;
+        case SULFRAS:
+          updateItem(item, handleSulfras(item));
+          break;
+        case BACKSTAGE:
+          updateItem(item, handleBackstage(item));
+          break;
+        case CONJURED:
+          updateItem(item, handleConjured(item));
+          break;
+        default:
+          updateItem(item, handleNormalItem(item));
+          break;
+      }
 
       // if (this.items[i].name != AGED_BRIE && this.items[i].name != BACKSTAGE) {
       //   if (this.items[i].quality > 0) {

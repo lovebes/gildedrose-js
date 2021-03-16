@@ -113,7 +113,7 @@ describe("Gilded Rose", function () {
       const gildedRose = new Shop([new Item("foo", startSellIn, 10000)]);
       const items = gildedRose.updateQuality();
 
-      expect(items[0].quality).toEqual(maxQuality);
+      expect(items[0].quality).toEqual(maxQuality - 1);
     });
   });
 
