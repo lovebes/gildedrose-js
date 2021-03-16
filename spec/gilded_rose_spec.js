@@ -120,6 +120,7 @@ describe("Gilded Rose", function () {
   it("should not change quality or sellIn for Sulfuras", () => {
     const startSellIn = 10;
     const startQuality = 100;
+    const CORRECT_QUALITY = 80;
     const targetName = "Sulfuras, Hand of Ragnaros";
     const gildedRose = new Shop([
       new Item(targetName, startSellIn, startQuality),
@@ -130,7 +131,7 @@ describe("Gilded Rose", function () {
 
     const { quality, sellIn } = items[0];
 
-    expect(quality).toEqual(startQuality);
+    expect(quality).toEqual(CORRECT_QUALITY);
     expect(sellIn).toEqual(startSellIn);
   });
 

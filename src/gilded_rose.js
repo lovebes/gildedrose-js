@@ -10,6 +10,7 @@ const AGED_BRIE = "Aged Brie";
 const SULFRAS = "Sulfuras, Hand of Ragnaros";
 const BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
 const MAX_QUALITY = 50;
+const SULFRAS_QUALITY = 80;
 
 const handleNormalItem = ({ sellIn, quality, name }) => {
   const newSellIn = sellIn - 1;
@@ -38,6 +39,17 @@ const handleAgedBrie = ({ sellIn, quality, name }) => {
   };
 };
 
+const handleSulfras = ({ sellIn, quality, name }) => {
+  const newSellIn = sellIn;
+  const newQuality = SULFRAS_QUALITY;
+
+  return {
+    name,
+    sellIn: newSellIn,
+    quality: newQuality,
+  };
+};
+
 const updateItem = (item, newItem) => {
   item.sellIn = newItem.sellIn;
   item.quality = newItem.quality;
@@ -52,7 +64,9 @@ class Shop {
       const item = this.items[i];
 
       // updateItem(item, handleNormalItem(item));
-      updateItem(item, handleAgedBrie(item));
+      // updateItem(item, handleAgedBrie(item));
+      updateItem(item, handleSulfras(item));
+
       // if (this.items[i].name != AGED_BRIE && this.items[i].name != BACKSTAGE) {
       //   if (this.items[i].quality > 0) {
       //     if (this.items[i].name != SULFRAS) {
