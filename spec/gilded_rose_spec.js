@@ -10,4 +10,17 @@ describe("Gilded Rose", function () {
     expect(sellIn).toEqual(startCount - 1);
     expect(quality).toEqual(startCount - 1);
   });
+  it("should lower quality twice as fast if sell by date has passed", () => {
+    const startSellIn = 1;
+    const startQuality = 5;
+    const gildedRose = new Shop([new Item("foo", startSellIn, startQuality)]);
+    gildedRose.updateQuality();
+
+    const items = gildedRose.updateQuality();
+    const { name, sellIn, quality } = items[0];
+
+    expect(name).toEqual("foo");
+    expect(sellIn).toEqual(startSellIn - 1 - 1);
+    expect(quality).toEqual(startQuality - 1 - 2);
+  });
 });
