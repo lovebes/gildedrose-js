@@ -50,6 +50,27 @@ const handleSulfras = ({ sellIn, quality, name }) => {
   };
 };
 
+const handleBackstage = ({ sellIn, quality, name }) => {
+  const newSellIn = sellIn - 1;
+
+  let newQuality = quality;
+  if (newSellIn > 10) {
+    newQuality += 1;
+  } else if (newSellIn > 5) {
+    newQuality += 2;
+  } else if (newSellIn >= 0) {
+    newQuality += 3;
+  } else {
+    newQuality = 0;
+  }
+
+  return {
+    name,
+    sellIn: newSellIn,
+    quality: newQuality,
+  };
+};
+
 const updateItem = (item, newItem) => {
   item.sellIn = newItem.sellIn;
   item.quality = newItem.quality;
@@ -65,7 +86,8 @@ class Shop {
 
       // updateItem(item, handleNormalItem(item));
       // updateItem(item, handleAgedBrie(item));
-      updateItem(item, handleSulfras(item));
+      // updateItem(item, handleSulfras(item));
+      updateItem(item, handleBackstage(item));
 
       // if (this.items[i].name != AGED_BRIE && this.items[i].name != BACKSTAGE) {
       //   if (this.items[i].quality > 0) {
