@@ -50,6 +50,50 @@ describe("Gilded Rose", function () {
     expect(quality).toEqual(startQuality + 1 + 1);
   });
 
+  it("should iterate and affect logic correctly to list of items", () => {
+    const propsList = [
+      { name: "Aged Brie", sellIn: 1, quality: 2 },
+      { name: "foo", sellIn: 3, quality: 4 },
+      { name: "Sulfuras, Hand of Ragnaros", sellIn: 5, quality: 80 },
+      {
+        name: "Backstage passes to a TAFKAL80ETC concert",
+        sellIn: 7,
+        quality: 8,
+      },
+    ];
+
+    const itemsList = propsList.map(
+      ({ name, sellIn, quality }) => new Item(name, sellIn, quality)
+    );
+
+    const gildedRose = new Shop(itemsList);
+    let items = gildedRose.updateQuality();
+
+    items.forEach(({ name, sellIn, quality }) => {
+      const itemProp = propsList.find(
+        ({ name: propName }) => propName === name
+      );
+      switch (itemProp.name) {
+        case "Aged Brie":
+          expect(sellIn).toEqual(itemProp.sellIn - 1);
+          expect(quality).toEqual(itemProp.quality + 1);
+          break;
+        case "Sulfuras, Hand of Ragnaros":
+          expect(sellIn).toEqual(itemProp.sellIn);
+          expect(quality).toEqual(80);
+          break;
+        case "Backstage passes to a TAFKAL80ETC concert":
+          expect(sellIn).toEqual(itemProp.sellIn - 1);
+          expect(quality).toEqual(itemProp.quality + 2);
+          break;
+        default:
+          expect(sellIn).toEqual(itemProp.sellIn - 1);
+          expect(quality).toEqual(itemProp.quality - 1);
+          break;
+      }
+    });
+  });
+
   describe("max quality", () => {
     it("quality should not be over 50 for Aged Brie items", () => {
       const startSellIn = 10;
