@@ -71,6 +71,24 @@ const handleBackstage = ({ sellIn, quality, name }) => {
   };
 };
 
+const handleConjured = ({ sellIn, quality, name }) => {
+  const newSellIn = sellIn - 1;
+
+  let newQuality = quality;
+  if (newSellIn < 0) {
+    newQuality -= 4;
+  } else {
+    newQuality -= 2;
+  }
+
+  newQuality = Math.max(0, newQuality);
+  return {
+    name,
+    sellIn: newSellIn,
+    quality: newQuality,
+  };
+};
+
 const updateItem = (item, newItem) => {
   item.sellIn = newItem.sellIn;
   item.quality = newItem.quality;
@@ -87,7 +105,8 @@ class Shop {
       // updateItem(item, handleNormalItem(item));
       // updateItem(item, handleAgedBrie(item));
       // updateItem(item, handleSulfras(item));
-      updateItem(item, handleBackstage(item));
+      // updateItem(item, handleBackstage(item));
+      updateItem(item, handleConjured(item));
 
       // if (this.items[i].name != AGED_BRIE && this.items[i].name != BACKSTAGE) {
       //   if (this.items[i].quality > 0) {
