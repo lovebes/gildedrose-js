@@ -49,4 +49,27 @@ describe("Gilded Rose", function () {
 
     expect(quality).toEqual(startQuality + 1 + 1);
   });
+
+  describe("max quality", () => {
+    it("quality should not be over 50 for Aged Brie items", () => {
+      const startSellIn = 10;
+      const startQuality = 50;
+      let gildedRose = new Shop([
+        new Item("Aged Brie", startSellIn, startQuality),
+      ]);
+      let items = gildedRose.updateQuality();
+      const { quality } = items[0];
+      expect(quality).toEqual(startQuality);
+    });
+
+    it("quality should be fixed to 50 if given initial quality that's >50", () => {
+      const startSellIn = 10;
+      const maxQuality = 50;
+
+      const gildedRose = new Shop([new Item("foo", startSellIn, 10000)]);
+      const items = gildedRose.updateQuality();
+
+      expect(items[0].quality).toEqual(maxQuality);
+    });
+  });
 });
