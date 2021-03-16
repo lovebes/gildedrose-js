@@ -19,8 +19,19 @@ describe("Gilded Rose", function () {
     const items = gildedRose.updateQuality();
     const { name, sellIn, quality } = items[0];
 
-    expect(name).toEqual("foo");
     expect(sellIn).toEqual(startSellIn - 1 - 1);
     expect(quality).toEqual(startQuality - 1 - 2);
+  });
+
+  it("should make quality never negative as day passes", () => {
+    const startSellIn = 1;
+    const startQuality = 1;
+    const gildedRose = new Shop([new Item("foo", startSellIn, startQuality)]);
+    gildedRose.updateQuality();
+
+    const items = gildedRose.updateQuality();
+    const { quality } = items[0];
+
+    expect(quality).toEqual(0);
   });
 });
