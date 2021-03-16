@@ -9,6 +9,7 @@ class Item {
 const AGED_BRIE = "Aged Brie";
 const SULFRAS = "Sulfuras, Hand of Ragnaros";
 const BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
+const MAX_QUALITY = 50;
 
 const handleNormalItem = ({ sellIn, quality, name }) => {
   const newSellIn = sellIn - 1;
@@ -19,6 +20,17 @@ const handleNormalItem = ({ sellIn, quality, name }) => {
     newQuality -= 1;
   }
   newQuality = Math.max(0, newQuality);
+  return {
+    name,
+    sellIn: newSellIn,
+    quality: newQuality,
+  };
+};
+
+const handleAgedBrie = ({ sellIn, quality, name }) => {
+  const newSellIn = sellIn - 1;
+  const newQuality = Math.min(quality + 1, MAX_QUALITY);
+
   return {
     name,
     sellIn: newSellIn,
@@ -39,7 +51,8 @@ class Shop {
     for (var i = 0; i < this.items.length; i++) {
       const item = this.items[i];
 
-      updateItem(item, handleNormalItem(item));
+      // updateItem(item, handleNormalItem(item));
+      updateItem(item, handleAgedBrie(item));
       // if (this.items[i].name != AGED_BRIE && this.items[i].name != BACKSTAGE) {
       //   if (this.items[i].quality > 0) {
       //     if (this.items[i].name != SULFRAS) {
