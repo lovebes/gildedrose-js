@@ -123,7 +123,7 @@ describe("Gilded Rose", function () {
     });
     it("should increase in quality as SellIn value is zero, quality is zero", () => {
       const startSellIn = 1;
-      const startQuality = 100;
+      const startQuality = 30;
       const itemName = "Backstage passes to a TAFKAL80ETC concert";
       const gildedRose = new Shop([
         new Item(itemName, startSellIn, startQuality),
@@ -135,6 +135,57 @@ describe("Gilded Rose", function () {
       const { quality } = items[0];
 
       expect(quality).toEqual(0);
+    });
+  });
+
+  describe("conjured items", () => {
+    it("should degrade twice as fast as normal items in quality", () => {
+      const startSellIn = 10;
+      const startQuality = 30;
+      const itemName = "Conjured";
+      const gildedRose = new Shop([
+        new Item(itemName, startSellIn, startQuality),
+      ]);
+      let items = gildedRose.updateQuality();
+
+      items = gildedRose.updateQuality();
+
+      const { quality } = items[0];
+
+      expect(quality).toEqual(startQuality - 2 - 2);
+    });
+
+    it("should be never negative in quality", () => {
+      const startSellIn = 10;
+      const startQuality = 1;
+      const itemName = "Conjured";
+      const gildedRose = new Shop([
+        new Item(itemName, startSellIn, startQuality),
+      ]);
+      let items = gildedRose.updateQuality();
+
+      items = gildedRose.updateQuality();
+
+      const { quality } = items[0];
+
+      expect(quality).toEqual(0);
+    });
+
+    it("should degrade four times as fast as normal items past sellIn date", () => {
+      const startSellIn = 1;
+      const startQuality = 50;
+      const itemName = "Conjured";
+      const gildedRose = new Shop([
+        new Item(itemName, startSellIn, startQuality),
+      ]);
+      let items = gildedRose.updateQuality();
+
+      items = gildedRose.updateQuality();
+      items = gildedRose.updateQuality();
+
+      const { quality } = items[0];
+
+      expect(quality).toEqual(startQuality - 2 - 4 - 4);
     });
   });
 });
