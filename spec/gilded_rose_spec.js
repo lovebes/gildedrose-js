@@ -196,11 +196,11 @@ describe("Gilded Rose", function () {
     });
   });
 
-  describe("conjured items", () => {
+  describe("Conjured Mana Cake items", () => {
     it("should degrade twice as fast as normal items in quality", () => {
       const startSellIn = 10;
       const startQuality = 30;
-      const itemName = "Conjured";
+      const itemName = "Conjured Mana Cake";
       const gildedRose = new Shop([
         new Item(itemName, startSellIn, startQuality),
       ]);
@@ -216,7 +216,7 @@ describe("Gilded Rose", function () {
     it("should be never negative in quality", () => {
       const startSellIn = 10;
       const startQuality = 1;
-      const itemName = "Conjured";
+      const itemName = "Conjured Mana Cake";
       const gildedRose = new Shop([
         new Item(itemName, startSellIn, startQuality),
       ]);
@@ -232,7 +232,7 @@ describe("Gilded Rose", function () {
     it("should degrade four times as fast as normal items past sellIn date", () => {
       const startSellIn = 1;
       const startQuality = 50;
-      const itemName = "Conjured";
+      const itemName = "Conjured Mana Cake";
       const gildedRose = new Shop([
         new Item(itemName, startSellIn, startQuality),
       ]);

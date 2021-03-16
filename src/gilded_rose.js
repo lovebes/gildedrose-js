@@ -9,7 +9,7 @@ class Item {
 const AGED_BRIE = "Aged Brie";
 const SULFRAS = "Sulfuras, Hand of Ragnaros";
 const BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
-const CONJURED = "Conjured";
+const CONJURED = "Conjured Mana Cake";
 const MAX_QUALITY = 50;
 const SULFRAS_QUALITY = 80;
 
