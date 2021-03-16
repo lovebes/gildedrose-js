@@ -121,5 +121,20 @@ describe("Gilded Rose", function () {
 
       expect(quality).toEqual(startQuality + 3 + 3);
     });
+    it("should increase in quality as SellIn value is zero, quality is zero", () => {
+      const startSellIn = 1;
+      const startQuality = 100;
+      const itemName = "Backstage passes to a TAFKAL80ETC concert";
+      const gildedRose = new Shop([
+        new Item(itemName, startSellIn, startQuality),
+      ]);
+      let items = gildedRose.updateQuality();
+
+      items = gildedRose.updateQuality();
+
+      const { quality } = items[0];
+
+      expect(quality).toEqual(0);
+    });
   });
 });
