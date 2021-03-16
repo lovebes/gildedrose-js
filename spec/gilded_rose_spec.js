@@ -196,7 +196,7 @@ describe("Gilded Rose", function () {
     });
   });
 
-  fdescribe("conjured items", () => {
+  describe("conjured items", () => {
     it("should degrade twice as fast as normal items in quality", () => {
       const startSellIn = 10;
       const startQuality = 30;
